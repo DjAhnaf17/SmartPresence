@@ -1,0 +1,8 @@
+pandas
+flask
+openpyxl
+pymysql
+bcrypt
+streamlit
+streamlit_option_menu
+pywhatkit
