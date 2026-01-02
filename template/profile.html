@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartPresence - Staff Profiles</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+</head>
+<style>
+:root {
+    --primary: #0066cc;
+    --primary-foreground: #ffffff;
+    --secondary: #6c757d;
+    --secondary-foreground: #ffffff;
+    --background: #ffffff;
+    --foreground: #000000;
+    --card-bg: #f8f9fa;
+    --border: #dee2e6;
+    --radius: 0.5rem;
+    --font-family: system-ui, -apple-system, "Segoe UI", Roboto;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--foreground);
+    background-color: var(--background);
+}
+
+.navbar {
+    background-color: var(--background) !important;
+    border-bottom: 1px solid var(--border);
+}
+
+.navbar-brand {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.staff-profile-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.staff-profile-card img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.staff-profile-card h5 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.staff-profile-card p {
+    font-size: 0.9rem;
+    color: var(--secondary);
+    margin-bottom: 1rem;
+}
+</style>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">SmartPresence</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Profiles</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section text-center py-5">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Meet Our Team</h1>
+            <p class="lead text-muted">Dedicated professionals ensuring success and innovation.</p>
+        </div>
+    </header>
+
+    <!-- Staff Profiles -->
+    <section class="container py-5">
+        <div class="row g-4">
+            <!-- Staff Member 1 -->
+            <div class="col-md-4">
+                <div class="staff-profile-card">
+                    <img src="https://via.placeholder.com/100" alt="Staff Photo">
+                    <h5>John Doe</h5>
+                    <p>Project Manager</p>
+                    <a href="#" class="btn btn-primary btn-sm">View Profile</a>
+                </div>
+            </div>
+            <!-- Staff Member 2 -->
+            <div class="col-md-4">
+                <div class="staff-profile-card">
+                    <img src="https://via.placeholder.com/100" alt="Staff Photo">
+                    <h5>Jane Smith</h5>
+                    <p>Software Developer</p>
+                    <a href="#" class="btn btn-primary btn-sm">View Profile</a>
+                </div>
+            </div>
+            <!-- Staff Member 3 -->
+            <div class="col-md-4">
+                <div class="staff-profile-card">
+                    <img src="https://via.placeholder.com/100" alt="Staff Photo">
+                    <h5>Emily Johnson</h5>
+                    <p>UX Designer</p>
+                    <a href="#" class="btn btn-primary btn-sm">View Profile</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

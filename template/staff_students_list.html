@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students List</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #000428, #004e92);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            /* overflow: hidden; Prevent scrollbar from appearing due to animation */
+        }
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333 !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: #333 !important;
+            font-size: 1rem;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: #6c63ff;
+            color: #fff !important;
+        }
+
+        /* Main Content Styling */
+        .container {
+            margin-top: 80px;
+            color: #fff;
+        }
+
+        .container h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Staff Information Table Styling */
+        .staff-info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .staff-info-table th,
+        .staff-info-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .staff-info-table th {
+            background-color: #6c63ff;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .staff-info-table td {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        .staff-info-table tr:hover td {
+            background-color: rgba(108, 99, 255, 0.1);
+        }
+
+        .staff-photo {
+            max-width: 100px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Student Cards Styling */
+        .student-card {
+            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .student-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .student-photo {
+            max-width: 100px;
+            max-height: 100px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .card-text strong {
+            color: #333;
+        }
+
+        /* View Profile Button Styling */
+        .btn-info {
+            display: flex;
+            justify-content: center;
+            background-color: #6c63ff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-info:hover {
+            background-color: #574fdb;
+        }
+
+        /* Back to Dashboard Button Styling */
+        .btn-secondary {
+            display: flex;
+            justify-content: center;
+            background-color: #6c63ff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #574fdb;
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 768px) {
+            .container {
+                margin-top: 60px;
+                padding: 15px;
+            }
+
+            .staff-info-table th,
+            .staff-info-table td {
+                padding: 10px;
+            }
+
+            .staff-photo {
+                max-width: 80px;
+            }
+
+            .student-card {
+                margin-bottom: 15px;
+            }
+
+            .card-title {
+                font-size: 1.1rem;
+            }
+
+            .card-text {
+                font-size: 0.8rem;
+            }
+
+            .btn-info, .btn-secondary {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                margin-top: 50px;
+                padding: 10px;
+            }
+
+            .staff-info-table th,
+            .staff-info-table td {
+                padding: 8px;
+                font-size: 0.9rem;
+            }
+
+            .staff-photo {
+                max-width: 60px;
+            }
+
+            .student-card {
+                margin-bottom: 10px;
+            }
+
+            .card-title {
+                font-size: 1rem;
+            }
+
+            .card-text {
+                font-size: 0.75rem;
+            }
+
+            .btn-info, .btn-secondary {
+                font-size: 0.75rem;
+                padding: 5px 10px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">SmartPresence - Attendance System</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <h2 style="text-align: center;">Students List</h2>
+        <p>Logged in as: <strong>{{ username }}</strong></p>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Staff Information Table -->
+        <table class="staff-info-table">
+            <tr>
+                <th>Attribute</th>
+                <th>Details</th>
+            </tr>
+            <tr>
+                <td><strong>Staff Name</strong></td>
+                <td>{{ staff_name }}</td>
+            </tr>
+            <tr>
+                <td><strong>Class</strong></td>
+                <td>{{ staff_class }}</td>
+            </tr>
+            
+            <tr>
+                <td><strong>Subject</strong></td>
+                <td>{{ staff_subject }}</td>
+            </tr>
+            
+        </table>
+
+        <!-- Students Cards -->
+        <div class="row">
+            {% for student in students %}
+            <div class="col-md-4">
+                <div class="card student-card">
+                    <div class="card-body">
+                        <!-- Student Photo -->
+                        {% if student.photo %}
+                        <div class="d-flex justify-content-center align-items-center mb-3">
+                            <img src="data:image/jpeg;base64,{{ student.photo }}" alt="Student Photo" class="student-photo">
+                        </div>
+                        {% endif %}
+
+                        <!-- Student Details -->
+                        <h5 class="card-title">{{ student.name }}</h5>
+                        <p class="card-text">
+                            <strong>Roll No:</strong> {{ student.roll }}<br>
+                            <strong>Username:</strong> {{ student.username }}<br>
+                            <strong>Gender:</strong> {{ student.gender }}<br>
+                            <strong>Department:</strong> {{ student.department }}<br>
+                            <strong>Class:</strong> {{ student.class }}<br>
+                        </p>
+
+                        <!-- View Profile Button -->
+                        <a href="{{ url_for('student_details', roll=student.roll) }}" class="btn btn-info btn-sm">View Profile</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Back to Dashboard -->
+        <a href="{{ url_for('staff_dashboard') }}" class="btn btn-secondary mt-3">Back to Dashboard</a>
+    </div>
+
+    
+        
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

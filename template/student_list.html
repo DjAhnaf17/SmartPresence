@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .profile-card {
+            margin-bottom: 20px;
+        }
+        .profile-card img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        /* Ensuring that the profile cards align in a single column */
+        @media (max-width: 768px) {
+            .card {
+                width: 100%; /* 100% width on smaller screens */
+                margin: 0 auto; /* Center the card */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Student List</h1>
+
+        {% if students %}
+            <div class="row">
+                {% for student in students %}
+                    <!-- Align the cards in a single column for mobile view -->
+                    <div class="col-12">
+                        <div class="card profile-card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ student.name }}</h5>
+                                <p class="card-text">
+                                    <strong>Username:</strong> {{ student.username }}<br>
+                                    <strong>Roll No:</strong> {{ student.roll }}<br>
+                                    <strong>Gender:</strong> {{ student.gender }}<br>
+                                    <strong>Department:</strong> {{ student.department }}<br>
+                                    <strong>Class:</strong> {{ student.class }}
+                                </p>
+                                <a href="{{ url_for('staff_student_profile', username=student.username) }}" class="btn btn-primary">View Profile</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No students found.</p>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

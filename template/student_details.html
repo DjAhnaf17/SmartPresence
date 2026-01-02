@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #000428, #004e92);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333 !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: #333 !important;
+            font-size: 1rem;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: #6c63ff;
+            color: #fff !important;
+        }
+
+        /* Main Content Styling */
+        .container {
+            margin-top: 80px;
+            color: #fff;
+        }
+
+        .container h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Student Details Card Styling */
+        .student-details-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .student-details-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .student-photo {
+            max-width: 200px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Table Styling */
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .details-table th,
+        .details-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .details-table th {
+            background-color: #6c63ff;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .details-table td {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        .details-table tr:hover td {
+            background-color: rgba(108, 99, 255, 0.1);
+        }
+
+        /* Back to Students List Button Styling */
+        .btn-secondary {
+            display: flex;
+            justify-content: center;
+            background-color: #6c63ff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #574fdb;
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 768px) {
+            .container {
+                margin-top: 60px;
+                padding: 15px;
+            }
+
+            .student-details-card {
+                padding: 15px;
+            }
+
+            .student-photo {
+                max-width: 150px;
+            }
+
+            .details-table th,
+            .details-table td {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                margin-top: 50px;
+                padding: 10px;
+            }
+
+            .student-details-card {
+                padding: 10px;
+            }
+
+            .student-photo {
+                max-width: 120px;
+            }
+
+            .details-table th,
+            .details-table td {
+                padding: 8px;
+                font-size: 0.9rem;
+            }
+
+            .btn-secondary {
+                font-size: 0.9rem;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Attendance System</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <h2>Student Details</h2>
+        <p>Logged in as: <strong>{{ username }}</strong></p>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Student Details Card -->
+        <div class="student-details-card">
+            <!-- Student Photo -->
+            {% if student.photo %}
+            <div class="text-center">
+                <img src="data:image/jpeg;base64,{{ student.photo }}" alt="Student Photo" class="student-photo">
+            </div>
+            {% endif %}
+
+            <!-- Student Details Table -->
+            <table class="details-table">
+                <tr>
+                    <th>Attribute</th>
+                    <th>Details</th>
+                </tr>
+                <tr>
+                    <td><strong>Roll No</strong></td>
+                    <td>{{ student.roll }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Name</strong></td>
+                    <td>{{ student.name }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Username</strong></td>
+                    <td>{{ student.username }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Gender</strong></td>
+                    <td>{{ student.gender }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Department</strong></td>
+                    <td>{{ student.department }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Class</strong></td>
+                    <td>{{ student.class }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Address</strong></td>
+                    <td>{{ student.address }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Mobile No</strong></td>
+                    <td>{{ student.mobileno }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Blood Group</strong></td>
+                    <td>{{ student.bloodgroup }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Back to Students List -->
+        <a href="{{ url_for('staff_students_list') }}" class="btn btn-secondary mt-3">Back to Students List</a>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

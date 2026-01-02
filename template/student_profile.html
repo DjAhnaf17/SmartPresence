@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='student_page.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='logo.png') }}" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Include GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <!-- Include Particles.js -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+    <title>Student Profile</title>
+    <style>
+        /* Animated Gradient Background */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #000428, #004e92);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Particles Background */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            z-index: -1; /* Behind other content */
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 280px;
+            height: 100vh;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 2; /* Above particles */
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #333;
+            padding: 10px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: #6c63ff;
+            color: #fff;
+        }
+
+        .sidebar .active {
+            background-color: #6c63ff;
+            color: #fff;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: 280px;
+            padding: 20px;
+            color: #fff;
+            position: relative;
+            z-index: 1; /* Above particles */
+        }
+
+        /* Container Styling */
+        .container {
+            margin-top: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            color: #333;
+            max-width: 500px;
+            opacity: 0; /* Start invisible for GSAP animation */
+            transform: translateY(-50px); /* Start position for animation */
+        }
+
+        /* Profile Card Styling */
+        .profile-card {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-card img {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Table Styling */
+        .table th {
+            background-color: #003067;
+            color: #fff;
+            text-align: justify;
+        }
+
+        .table td {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Toggle Button */
+        .toggle-btn {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar a {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            body {
+                overflow-y: auto;
+                scroll-behavior: smooth;
+            }
+
+            .sidebar {
+                display: none;
+                top: 0;
+                left: -280px;
+                transition: 0.8s all;
+            }
+
+            .sidebar.show {
+                display: block;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                z-index: 0;
+                background-color: rgba(255, 255, 255);
+                overflow-y: auto;
+            }
+
+            .main-content {
+                padding: 10px;
+                color: #fff;
+            }
+
+            .toggle-btn {
+                display: block;
+                position: fixed;
+                top: 15px;
+                right: 20px;
+                z-index: 1200;
+                font-size: 1.5rem;
+                color: black;
+                cursor: pointer;
+                background-color: #fff;
+                border-radius: 5px;
+                padding: 5px 10px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a href="/student_dashboard" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+            <span class="fs-4">Menu Section</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a href="/student_dashboard" class="nav-link">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="/attendance_sheet" class="nav-link link-dark">
+                    Attendance Sheet
+                </a>
+            </li>
+            <li>
+                <a href="/timetable" class="nav-link link-dark">
+                    Time Table
+                </a>
+            </li>
+            <li>
+                <a href="/student_announcements" class="nav-link link-dark">
+                    Announcements
+                </a>
+            </li>
+            <li>
+                <a href="/student_profile" class="nav-link active">
+                    Profile
+                </a>
+            </li>
+        </ul>
+        <hr>
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                <strong>User</strong>
+            </a>
+            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser2">
+                <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <h1 class="text-center">Student Profile</h1>
+            <div class="profile-card">
+                <img src="data:image/jpeg;base64,{{ profile_data.photo }}" alt="Profile Picture" class="img-fluid shadow-4-strong">
+            </div>
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    <tr>
+                        <th>Roll Number</th>
+                        <td>{{ profile_data.roll }}</td>
+                    </tr>
+                    <tr>
+                        <th>Username</th>
+                        <td>{{ profile_data.username }}</td>
+                    </tr>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ profile_data.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Gender</th>
+                        <td>{{ profile_data.gender }}</td>
+                    </tr>
+                    <tr>
+                        <th>Department</th>
+                        <td>{{ profile_data.department }}</td>
+                    </tr>
+                    <tr>
+                        <th>Class</th>
+                        <td>{{ profile_data.class }}</td>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <td>{{ profile_data.address }}</td>
+                    </tr>
+                    <tr>
+                        <th>Mobile Number</th>
+                        <td>{{ profile_data.mobileno }}</td>
+                    </tr>
+                    <tr>
+                        <th>Blood Group</th>
+                        <td>{{ profile_data.bloodgroup }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Bootstrap and Custom Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXlIWf2R+LcS0Jftt8NO9ClfrKo1mx0l1VxgBo7+AmxjUeboPYyHvZlNNRB4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script>
+        // GSAP Animations
+        gsap.from(".sidebar", {
+            duration: 1,
+            x: -300,
+            opacity: 0,
+            ease: "power3.out",
+        });
+
+        gsap.to(".container", {
+            duration: 1.5,
+            opacity: 1,
+            y: 0,
+            ease: "power3.out",
+            delay: 0.5,
+        });
+
+        gsap.from(".profile-card img", {
+            duration: 1,
+            opacity: 0,
+            scale: 0.8,
+            ease: "power3.out",
+            delay: 1,
+        });
+
+        gsap.from(".table", {
+            duration: 1,
+            opacity: 0,
+            y: 50,
+            stagger: 0.2,
+            ease: "power3.out",
+            delay: 1.5,
+        });
+
+        // Particles.js Background
+        particlesJS.load("particles-js", "{{ url_for('static', filename='particles.json') }}", function () {
+            console.log("Particles.js loaded!");
+        });
+
+        // Toggle Sidebar
+        function toggleSidebar() {
+            const sidebar = document.querySelector(".sidebar");
+            sidebar.classList.toggle("show");
+        }
+
+        // Close Sidebar on Outside Click
+        document.addEventListener("click", function (event) {
+            const sidebar = document.querySelector(".sidebar");
+            const toggleBtn = document.querySelector(".toggle-btn");
+            if (
+                !sidebar.contains(event.target) &&
+                !toggleBtn.contains(event.target) &&
+                sidebar.classList.contains("show")
+            ) {
+                sidebar.classList.remove("show");
+            }
+        });
+    </script>
+</body>
+</html>

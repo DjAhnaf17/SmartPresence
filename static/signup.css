@@ -1,0 +1,145 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(45deg, #000428, #004e92);
+    background-size: 400% 400%;
+    animation: gradientAnimation 10s ease infinite;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Card Container */
+.card-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+.card-container:hover {
+    transform: scale(1.03);
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Title Styling */
+.card-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333333;
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555555;
+}
+
+.form-group input {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #6c63ff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(108, 99, 255, 0.5);
+}
+
+/* Button Styling */
+.login-btn {
+    width: 100%;
+    background-color: #6c63ff;
+    color: #ffffff;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.login-btn:hover {
+    background-color: #5a54d2;
+    transform: scale(1.05);
+}
+
+/* Forgot Password Link */
+.forgot-password {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.forgot-password a {
+    color: #6c63ff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.forgot-password a:hover {
+    color: #5a54d2;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card-container {
+        padding: 20px;
+        width: 90%;
+    }
+
+    .form-group input {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .login-btn {
+        font-size: 16px;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-container h2 {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .login-btn {
+        font-size: 14px;
+    }
+
+    .form-group input {
+        padding: 8px;
+    }
+}

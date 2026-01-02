@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='student_page.css') }}"
+    />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='logo.png') }}"
+      type="image/x-icon"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <!-- Include GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <!-- Include Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <!-- Include Particles.js -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+    <title>Student Dashboard</title>
+  </head>
+  <body>
+
+
+<style>
+  /* Glowing Effect for Heading */
+#animated-heading {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0; /* Start invisible for GSAP animation */
+  text-shadow: 0 0 10px #00ffea, 0 0 20px #00ffea, 0 0 40px #00ffea;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px #00ffea, 0 0 20px #00ffea, 0 0 40px #00ffea;
+  }
+  to {
+    text-shadow: 0 0 20px #00ffea, 0 0 40px #00ffea, 0 0 80px #00ffea;
+  }
+}
+
+/* Glowing Effect for Subtext */
+#animated-subtext {
+  font-size: 1.5rem;
+  text-align: center;
+  opacity: 0; /* Start invisible for GSAP animation */
+  text-shadow: 0 0 10px #00ffea, 0 0 20px #00ffea, 0 0 40px #00ffea;
+  animation: glow 2s infinite alternate;
+}
+
+
+/* Floating Animation */
+
+.particle-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2; /* Above particles */
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(-50%, -50%);
+  }
+  50% {
+    transform: translate(-50%, -55%);
+  }
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}
+/* Gradient Background Animation */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(45deg, #000428, #004e92);
+  background-size: 400% 400%;
+  animation: gradientAnimation 10s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Sidebar Link Hover Effect */
+.sidebar .nav-link {
+  transition:  0.8s ease;
+}
+
+.sidebar .nav-link :hover {
+  transform: translateX(10px);
+}
+</style>
+
+
+<style>
+  /* Particles Background */
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  background: linear-gradient(45deg, #000428, #004e92);
+  z-index: 1; /* Behind text */
+}
+
+/* Text Overlay */
+.particle-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2; /* Above particles */
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+#animated-heading {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0; /* Start invisible for GSAP animation */
+}
+
+#animated-subtext {
+  font-size: 1.5rem;
+  text-align: center;
+  opacity: 0; /* Start invisible for GSAP animation */
+}
+
+/* Ensure other content is above particles */
+.sidebar,
+.toggle-btn {
+  position: relative;
+  z-index: 3; /* Above text and particles */
+}
+</style>
+
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+
+    <!-- Text Overlay -->
+    <div class="particle-text">
+      <h1 id="animated-heading">Welcome to the Student Dashboard</h1>
+      <p id="animated-subtext">
+        Manage your attendance, timetable, and announcements seamlessly.
+      </p>
+    </div>
+
+    <!-- Sidebar Toggle Button -->
+    <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a
+        href="/student_dashboard"
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"
+      >
+        <span class="fs-4">Menu Section</span>
+      </a>
+      <hr />
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="/student_dashboard" class="nav-link active"> Home </a>
+        </li>
+        <li>
+          <a href="/attendance_sheet" class="nav-link link-dark">
+            Attendance Sheet
+          </a>
+        </li>
+        <li>
+          <a href="/timetable" class="nav-link link-dark"> Time Table </a>
+        </li>
+        <li>
+          <a href="/student_announcements" class="nav-link link-dark">
+            Announcements
+          </a>
+        </li>
+        <li>
+          <a href="/student_profile" class="nav-link link-dark"> Profile </a>
+        </li>
+      </ul>
+      <hr />
+      <div class="dropdown">
+        <a
+          href="#"
+          class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
+          id="dropdownUser2"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <strong>User</strong>
+        </a>
+        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser2">
+          <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bootstrap and Custom Scripts -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+      integrity="sha384-IQsoLXlIWf2R+LcS0Jftt8NO9ClfrKo1mx0l1VxgBo7+AmxjUeboPYyHvZlNNRB4"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      // GSAP Animations for Text
+      gsap.to("#animated-heading", {
+        duration: 2,
+        opacity: 1,
+        y: 0,
+        ease: "power3.out",
+        delay: 1,
+      });
+
+      gsap.to("#animated-subtext", {
+        duration: 2,
+        opacity: 1,
+        y: 0,
+        ease: "power3.out",
+        delay: 1.5,
+      });
+
+      // Text Typing Effect (Optional)
+      const heading = document.getElementById("animated-heading");
+      const subtext = document.getElementById("animated-subtext");
+
+      // Clear initial text
+      heading.textContent = "";
+      subtext.textContent = "";
+
+      // Typing animation for heading
+      const headingText = "Welcome to the Student Dashboard";
+      let headingIndex = 0;
+
+      const headingInterval = setInterval(() => {
+        heading.textContent += headingText[headingIndex];
+        headingIndex++;
+        if (headingIndex === headingText.length) clearInterval(headingInterval);
+      }, 100);
+
+      // Typing animation for subtext
+      const subtextText = "Manage your attendance, timetable, and announcements seamlessly.";
+      let subtextIndex = 0;
+
+      const subtextInterval = setInterval(() => {
+        subtext.textContent += subtextText[subtextIndex];
+        subtextIndex++;
+        if (subtextIndex === subtextText.length) clearInterval(subtextInterval);
+      }, 50);
+
+      // Particles.js Background
+      particlesJS.load("particles-js", "{{ url_for('static', filename='particles.json') }}", function () {
+        console.log("Particles.js loaded!");
+      });
+
+      // Toggle Sidebar
+      function toggleSidebar() {
+        const sidebar = document.querySelector(".sidebar");
+        sidebar.classList.toggle("show");
+      }
+
+      // Close Sidebar on Outside Click
+      document.addEventListener("click", function (event) {
+        const sidebar = document.querySelector(".sidebar");
+        const toggleBtn = document.querySelector(".toggle-btn");
+        if (
+          !sidebar.contains(event.target) &&
+          !toggleBtn.contains(event.target) &&
+          sidebar.classList.contains("show")
+        ) {
+          sidebar.classList.remove("show");
+        }
+      });
+    </script>
+  </body>
+</html>
